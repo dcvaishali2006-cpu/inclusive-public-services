@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inclusive Public Services Directory</title>
+  <!-- Atkinson Hyperlegible: a font designed to be easy to read for people with low vision -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-title="index">
+  <!-- Keyboard users can jump straight to the results -->
+  <a class="skip-link" href="#results" data-i18n="skip">Skip to results</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <p class="brand" data-i18n="brand">Inclusive Public Services</p>
+      <div class="tools" role="group" aria-label="Display settings" data-i18n-aria="displaySettings">
+        <button type="button" id="langBtn" lang="hi" data-i18n="switchTo" aria-label="Change language / भाषा बदलें">हिन्दी</button>
+        <button type="button" id="smallerText" aria-label="Decrease text size" data-i18n-aria="smallerText">A-</button>
+        <button type="button" id="biggerText" aria-label="Increase text size" data-i18n-aria="biggerText">A+</button>
+        <button type="button" id="contrastBtn" aria-pressed="false" data-i18n="contrast">High contrast</button>
+        <a href="login.html" data-i18n="login">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <form id="filterForm" aria-label="Search and filter services" data-i18n-aria="searchAndFilter">
+
+      <!-- Top banner: the search box is the first thing people see -->
+      <section class="hero">
+        <div class="wrap">
+          <h1 data-i18n="heroTitle">Find public services that work for you</h1>
+          <p class="lead" data-i18n="heroLead">Search hospitals, ration shops, offices, schools and helplines. See who can use each one, what is free, and whether it is wheelchair accessible.</p>
+
+          <div class="search-row">
+            <label for="searchInput" class="sr-only" data-i18n="searchLabel">Search services</label>
+            <input type="search" id="searchInput" placeholder="Try: hospital, pension, helpline" data-i18n-placeholder="searchPlaceholder">
+            <button type="submit" data-i18n="searchBtn">Search</button>
+          </div>
+
+          <!-- Category buttons. script.js reads data-category when one is clicked -->
+          <div class="chips" role="group" aria-label="Choose a category" data-i18n-aria="chooseCategory">
+            <button type="button" class="chip" data-category="" aria-pressed="true" data-i18n="v.All">All</button>
+            <button type="button" class="chip" data-category="Hospital" aria-pressed="false"><span aria-hidden="true">🏥</span> <span data-i18n="v.Hospital">Hospital</span></button>
+            <button type="button" class="chip" data-category="Ration Shop" aria-pressed="false"><span aria-hidden="true">🛒</span> <span data-i18n="v.Ration Shop">Ration Shop</span></button>
+            <button type="button" class="chip" data-category="Government Office" aria-pressed="false"><span aria-hidden="true">🏛️</span> <span data-i18n="v.Government Office">Government Office</span></button>
+            <button type="button" class="chip" data-category="School" aria-pressed="false"><span aria-hidden="true">🏫</span> <span data-i18n="v.School">School</span></button>
+            <button type="button" class="chip" data-category="Helpline" aria-pressed="false"><span aria-hidden="true">📞</span> <span data-i18n="v.Helpline">Helpline</span></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap">
+        <!-- <details> opens and closes with the keyboard, no JavaScript needed -->
+        <details class="filter-panel" open>
+          <summary data-i18n="moreFilters">More filters</summary>
+          <div class="filters">
+            <div>
+              <label for="cityInput" data-i18n="cityLabel">City / area</label>
+              <input type="text" id="cityInput" placeholder="e.g. Mysuru" data-i18n-placeholder="cityPlaceholder">
+            </div>
+            <div>
+              <label for="eligibilitySelect" data-i18n="eligibilityLabel">Who can use it</label>
+              <select id="eligibilitySelect">
+                <option value="" data-i18n="anyone">Anyone</option>
+                <option value="Senior Citizen" data-i18n="v.Senior Citizen">Senior Citizen</option>
+                <option value="Disability" data-i18n="v.Disability">Disability</option>
+                <option value="Women" data-i18n="v.Women">Women</option>
+                <option value="BPL" data-i18n="v.BPL">BPL</option>
+              </select>
+            </div>
+            <div>
+              <label for="languageSelect" data-i18n="languageLabel">Language</label>
+              <select id="languageSelect">
+                <option value="" data-i18n="anyLanguage">Any language</option>
+                <option value="English" data-i18n="v.English">English</option>
+                <option value="Hindi" data-i18n="v.Hindi">Hindi</option>
+                <option value="Kannada" data-i18n="v.Kannada">Kannada</option>
+              </select>
+            </div>
+            <fieldset>
+              <legend data-i18n="onlyShow">Only show</legend>
+              <label><input type="checkbox" id="wheelchairBox"> <span data-i18n="wheelchairOnly">Wheelchair accessible</span></label><br>
+              <label><input type="checkbox" id="freeBox"> <span data-i18n="freeOnly">Free services</span></label>
+            </fieldset>
+            <div>
+              <button type="button" id="clearBtn" data-i18n="clearFilters">Clear all filters</button>
+            </div>
+          </div>
+        </details>
+
+        <!-- aria-live makes screen readers announce changes -->
+        <p id="resultCount" aria-live="polite"></p>
+        <p id="statusMessage" aria-live="polite"></p>
+        <section id="results" aria-label="Search results" data-i18n-aria="searchResults"></section>
+      </div>
+    </form>
+  </main>
+
+  <!-- Pop-up form for "Report incorrect info" (outside the filter form on purpose) -->
+  <dialog id="reportDialog" aria-labelledby="reportTitle">
+    <form id="reportForm">
+      <h2 id="reportTitle" data-i18n="reportTitle">Report incorrect info</h2>
+      <p id="reportServiceName"></p>
+      <label for="reportMessage" data-i18n="reportQuestion">What is wrong?</label>
+      <textarea id="reportMessage" rows="4" maxlength="500" required></textarea>
+      <p>
+        <button type="submit" data-i18n="sendReport">Send report</button>
+        <button type="button" id="cancelReport" data-i18n="cancel">Cancel</button>
+      </p>
+    </form>
+  </dialog>
+
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

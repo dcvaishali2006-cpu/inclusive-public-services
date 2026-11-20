@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Inclusive Public Services Directory</title>
+  <!-- Atkinson Hyperlegible: a font designed to be easy to read for people with low vision -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <p class="brand">Inclusive Public Services</p>
+      <div class="tools"><a href="index.html">Back to directory</a><a href="login.html">Login page</a></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="page-title">Admin panel</h1>
+
+    <!-- Login box (shown first) -->
+    <section id="loginSection">
+      <form id="loginForm" class="card stack">
+        <h2>Admin login</h2>
+        <label for="passwordInput">Password</label>
+        <input type="password" id="passwordInput" required>
+        <p id="loginMessage" class="warning" aria-live="polite"></p>
+        <button type="submit">Login</button>
+      </form>
+    </section>
+
+    <!-- Admin tools (hidden until login works) -->
+    <section id="panel" hidden>
+      <p><button type="button" id="logoutBtn">Logout</button></p>
+
+      <form id="serviceForm" class="card stack">
+        <h2 id="formTitle">Add a new service</h2>
+        <label for="serviceName">Name</label>
+        <input type="text" id="serviceName" required>
+        <label for="category">Category</label>
+        <select id="category" required>
+          <option>Hospital</option><option>Ration Shop</option>
+          <option>Government Office</option><option>School</option><option>Helpline</option>
+        </select>
+        <label for="city">City / area</label>
+        <input type="text" id="city" required>
+        <label for="address">Address</label>
+        <input type="text" id="address">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone">
+        <label for="description">Description</label>
+        <textarea id="description" rows="3"></textarea>
+
+        <fieldset>
+          <legend>Features</legend>
+          <label><input type="checkbox" id="wheelchair"> Wheelchair accessible</label>
+          <label><input type="checkbox" id="isFree" checked> Free service</label>
+        </fieldset>
+        <fieldset>
+          <legend>Who can use it</legend>
+          <label><input type="checkbox" name="eligibility" value="Everyone" checked> Everyone</label>
+          <label><input type="checkbox" name="eligibility" value="Senior Citizen"> Senior Citizen</label>
+          <label><input type="checkbox" name="eligibility" value="Disability"> Disability</label>
+          <label><input type="checkbox" name="eligibility" value="Women"> Women</label>
+          <label><input type="checkbox" name="eligibility" value="BPL"> BPL</label>
+        </fieldset>
+        <fieldset>
+          <legend>Languages</legend>
+          <label><input type="checkbox" name="languages" value="English" checked> English</label>
+          <label><input type="checkbox" name="languages" value="Hindi"> Hindi</label>
+          <label><input type="checkbox" name="languages" value="Kannada"> Kannada</label>
+        </fieldset>
+
+        <p id="formMessage" aria-live="polite"></p>
+        <button type="submit">Save service</button>
+        <button type="button" id="cancelEdit">Clear form</button>
+      </form>
+
+      <h2>All services</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>City</th><th>Verified</th><th>Actions</th></tr></thead>
+          <tbody id="serviceRows"></tbody>
+        </table>
+      </div>
+
+      <h2>Reports from citizens</h2>
+      <div id="reportList"></div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

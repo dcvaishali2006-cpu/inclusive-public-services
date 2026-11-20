@@ -1,0 +1,198 @@
+/* ===== COLOURS =====
+   Stored as variables, so High Contrast mode only has to change these lines.
+   The look is inspired by public signboards: deep teal and signal yellow. */
+:root {
+  --bg: #f2f6f4;
+  --ink: #11323f;          /* main text colour */
+  --card: #ffffff;
+  --brand: #0e4a5c;        /* deep teal for header and top banner */
+  --on-brand: #ffffff;     /* text on top of the teal */
+  --signal: #ffc83d;       /* signal yellow for main actions and icons */
+  --on-signal: #11323f;    /* text on top of the yellow */
+  --border: #5f7c86;
+  --yes: #17612f;          /* green text for "available" facts */
+  --no: #8a2d1c;           /* red text for "not available" facts */
+  --warn-bg: #fff1d6;
+  --warn: #6b3500;
+  --focus: #ff6a00;        /* keyboard focus outline */
+}
+
+body.high-contrast {
+  --bg: #000000; --ink: #ffffff; --card: #000000;
+  --brand: #000000; --on-brand: #ffffff;
+  --signal: #ffe600; --on-signal: #000000;
+  --border: #ffffff; --yes: #7dff9b; --no: #ff9a8a;
+  --warn-bg: #000000; --warn: #ffb347; --focus: #00e5ff;
+}
+
+/* ===== BASIC SETUP ===== */
+* { box-sizing: border-box; }
+
+/* Atkinson Hyperlegible is a font made for people with low vision.
+   If it cannot load, the browser uses Arial instead. */
+body {
+  margin: 0;
+  font-family: 'Atkinson Hyperlegible', Arial, Helvetica, sans-serif;
+  font-size: 1rem;           /* rem sizes let the A+ / A- buttons scale everything */
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+[hidden] { display: none !important; }
+
+/* Centres content and keeps lines from getting too long */
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 1rem; }
+
+/* Hidden on screen but still read by screen readers */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Skip link stays off-screen until a keyboard user presses Tab */
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: 0; top: 0; background: #fff; color: #000; padding: .6rem; z-index: 10; }
+
+/* A thick outline shows keyboard users where they are */
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
+.site-header :focus-visible, .hero :focus-visible { outline-color: #ffffff; }
+
+a { color: inherit; }
+a:hover, button:hover { text-decoration: underline; }
+
+/* ===== HEADER ===== */
+.site-header { background: var(--brand); color: var(--on-brand); }
+.header-row {
+  display: flex; flex-wrap: wrap; gap: .75rem;
+  justify-content: space-between; align-items: center; padding-top: .75rem; padding-bottom: .75rem;
+}
+.brand { margin: 0; font-weight: 700; font-size: 1.15rem; }
+
+.tools { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.tools button, .tools a {
+  background: transparent; color: var(--on-brand); border: 2px solid var(--on-brand);
+  border-radius: 999px; padding: .25rem .85rem; font-weight: 700; text-decoration: none;
+}
+.tools button:hover, .tools a:hover { text-decoration: underline; }
+.tools button[aria-pressed="true"] { background: var(--on-brand); color: var(--brand); }
+
+/* ===== TOP BANNER (HERO) ===== */
+.hero { background: var(--brand); color: var(--on-brand); padding: 2.5rem 0 2.25rem; }
+.hero h1 { margin: 0 0 .6rem; font-size: clamp(1.9rem, 5vw, 3rem); line-height: 1.1; max-width: 20em; text-wrap: balance; }
+.lead { max-width: 40rem; font-size: 1.15rem; margin: 0 0 1.5rem; }
+
+.search-row { display: flex; flex-wrap: wrap; gap: .6rem; }
+.search-row input { flex: 1 1 260px; font-size: 1.2rem; padding: .85rem 1rem; border-color: var(--on-brand); }
+.search-row button { font-size: 1.2rem; padding: .85rem 1.8rem; }
+
+/* Category buttons ("chips") */
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+.chip {
+  background: transparent; color: var(--on-brand); border: 2px solid var(--on-brand);
+  border-radius: 999px; padding: .4rem 1rem; font-weight: 700;
+}
+.chip[aria-pressed="true"] { background: var(--signal); color: var(--on-signal); border-color: var(--signal); }
+
+/* ===== FORMS AND BUTTONS ===== */
+button, input, select, textarea {
+  font: inherit; padding: .55rem .75rem; border: 2px solid var(--border);
+  border-radius: 8px; background: var(--card); color: var(--ink);
+}
+/* Normal buttons: white with a dark outline */
+button { cursor: pointer; font-weight: 700; border-color: var(--ink); }
+/* Main buttons (submit): signal yellow */
+button[type=submit], .primary { background: var(--signal); color: var(--on-signal); border-color: var(--on-signal); }
+
+input[type=text], input[type=search], input[type=password], select, textarea { width: 100%; }
+input[type=checkbox] { width: 1.2rem; height: 1.2rem; vertical-align: middle; }
+label, legend { font-weight: 700; }
+fieldset { border: 2px solid var(--border); border-radius: 8px; margin: 0; padding: .5rem .75rem .75rem; }
+fieldset label { display: inline-block; font-weight: 400; margin-right: 1rem; }
+
+/* ===== FILTER PANEL ===== */
+.filter-panel {
+  background: var(--card); border: 2px solid var(--border); border-radius: 10px;
+  margin: 1.25rem 0; padding: .75rem 1rem 1rem;
+}
+.filter-panel summary { font-weight: 700; font-size: 1.1rem; cursor: pointer; }
+.filters {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: .9rem; align-items: start; margin-top: .9rem;
+}
+.filters > div > label { display: block; margin-bottom: .25rem; }
+.filters fieldset label { display: block; margin-right: 0; }
+
+/* ===== RESULTS ===== */
+#resultCount { font-weight: 700; font-size: 1.1rem; margin: 0 0 .75rem; }
+#statusMessage { margin: 0 0 .75rem; }
+
+/* Cards sit in a grid: 2 columns on wide screens, 1 on phones */
+#results {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 1rem; margin-bottom: 3rem;
+}
+#results .card { margin: 0; }
+
+.card { background: var(--card); border: 2px solid var(--border); border-radius: 10px; padding: 1.1rem; margin: 1rem 0; }
+.card h2, .card h3 { margin: 0; font-size: 1.25rem; line-height: 1.25; }
+.card p { margin: .5rem 0; }
+
+/* Icon tile at the top of each card, like a signboard pictogram */
+.card-top { display: flex; align-items: center; gap: .85rem; }
+.card-icon {
+  flex: none; width: 3.4rem; height: 3.4rem; display: grid; place-items: center;
+  font-size: 1.8rem; background: var(--signal); color: var(--on-signal); border-radius: 8px;
+}
+.card-top .meta { margin: 0; }
+
+/* Facts: the symbol AND the words show the answer, never colour alone */
+.facts { list-style: none; margin: .6rem 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.facts li { border: 2px solid currentColor; border-radius: 6px; padding: .1rem .6rem; font-weight: 700; font-size: .95rem; }
+.facts .yes { color: var(--yes); }
+.facts .no { color: var(--no); }
+
+.badge {
+  display: inline-block; border: 2px solid var(--border); border-radius: 999px;
+  padding: 0 .65rem; margin: .1rem .15rem .1rem 0; font-size: .9rem;
+}
+.verified { font-size: .95rem; }
+.warning {
+  background: var(--warn-bg); color: var(--warn); font-weight: 700;
+  border: 2px solid var(--warn); border-left-width: 8px; border-radius: 6px; padding: .4rem .7rem;
+}
+
+/* ===== LOGIN / WELCOME PAGE ===== */
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; margin: 1.5rem 0 3rem; }
+.choices .card { margin: 0; }
+/* A link that looks like a main button */
+.button-link {
+  display: inline-block; background: var(--signal); color: var(--on-signal);
+  border: 2px solid var(--on-signal); border-radius: 8px; padding: .55rem 1.2rem;
+  font-weight: 700; text-decoration: none;
+}
+.button-link:hover { text-decoration: underline; }
+
+/* ===== ADMIN PAGE ===== */
+.page-title { margin: 1.5rem 0 0; }
+.stack > label { display: block; margin-top: .9rem; }
+.stack > fieldset { margin-top: .9rem; }
+#loginForm { max-width: 420px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+th, td { border: 1px solid var(--border); padding: .5rem; text-align: left; }
+th { background: var(--brand); color: var(--on-brand); }
+td button { margin: .15rem; padding: .3rem .6rem; }
+
+/* ===== POP-UP (report form) ===== */
+dialog { background: var(--card); color: var(--ink); border: 3px solid var(--border); border-radius: 10px; width: 90%; max-width: 500px; padding: 1.25rem; }
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+
+/* ===== SMALL SCREENS ===== */
+@media (max-width: 600px) {
+  .hero { padding: 1.5rem 0; }
+  .search-row button { width: 100%; }
+  .brand { font-size: 1rem; }
+  th, td { font-size: .9rem; padding: .3rem; }
+}

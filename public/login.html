@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome - Inclusive Public Services Directory</title>
+  <!-- Atkinson Hyperlegible: a font designed to be easy to read for people with low vision -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-title="login">
+  <header class="site-header">
+    <div class="wrap header-row">
+      <p class="brand" data-i18n="brand">Inclusive Public Services</p>
+      <div class="tools"><button type="button" id="langBtn" lang="hi" data-i18n="switchTo" aria-label="Change language / भाषा बदलें">हिन्दी</button></div>
+    </div>
+  </header>
+
+  <!-- Top banner with the welcome message -->
+  <section class="hero">
+    <div class="wrap">
+      <h1 data-i18n="welcome">Welcome</h1>
+      <p class="lead" data-i18n="welcomeLead">Find public services near you, or log in as admin to add and update services.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="choices">
+
+      <!-- Choice 1: anyone can enter without a password -->
+      <section class="card">
+        <h2 data-i18n="findService">I want to find a service</h2>
+        <p data-i18n="findServiceText">No password needed. Search hospitals, ration shops, offices, schools and helplines.</p>
+        <p><a class="button-link" href="index.html" data-i18n="continueVisitor">Continue as visitor</a></p>
+      </section>
+
+      <!-- Choice 2: admin login -->
+      <section class="card">
+        <h2 data-i18n="adminLogin">Admin login</h2>
+        <form id="adminForm" class="stack">
+          <label for="passwordInput" data-i18n="password">Password</label>
+          <input type="password" id="passwordInput" required>
+          <p id="loginMessage" class="warning" aria-live="polite" hidden></p>
+          <p><button type="submit" data-i18n="loginAdmin">Login as admin</button></p>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="translations.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
